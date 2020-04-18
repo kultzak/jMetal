@@ -1,15 +1,17 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
  * Class representing problem MaF05
  */
+@SuppressWarnings("serial")
 public class MaF09 extends AbstractDoubleProblem {
 
   public static int maxinter9;
@@ -129,8 +131,7 @@ public class MaF09 extends AbstractDoubleProblem {
       upper.add(10000.0);
     }
 
-    setLowerLimit(lower);
-    setUpperLimit(upper);
+    setVariableBounds(lower, upper);
   }
 
   /**
@@ -148,7 +149,7 @@ public class MaF09 extends AbstractDoubleProblem {
     double[] f = new double[numberOfObjectives];
 
     for (int i = 0; i < numberOfVariables_; i++) {
-      x[i] = solution.getVariableValue(i);
+      x[i] = solution.getVariable(i);
     }
 
     // check if the point is infeasible
@@ -158,7 +159,7 @@ public class MaF09 extends AbstractDoubleProblem {
       //re-generate a random variable
       for (int i = 0; i < numberOfVariables_; i++) {
         x[i] = generV(getLowerBound(i), getUpperBound(i));
-        solution.setVariableValue(i, x[i]);
+        solution.setVariable(i, x[i]);
       }
       infeasible = if_infeasible(x);
     }

@@ -2,16 +2,17 @@ package org.uma.jmetal.util.chartcontainer;
 
 import org.knowm.xchart.*;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
-import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
-import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
 
 import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -25,18 +26,12 @@ public class ChartContainerWithReferencePoints {
   private Map<String, XYChart> charts;
   private XYChart frontChart;
   private XYChart varChart;
-  private SwingWrapper<XYChart> sw;
+  private SwingWrapper<XYChart> swingWrapper;
   private String name;
   private int delay;
   private int objective1;
   private int objective2;
-  private int variable1;
-  private int variable2;
-  private Map<String, List<Integer>> iterations;
-  private Map<String, List<Double>> indicatorValues;
   private List<String> referencePointName ;
-
-  private int updateCounter = 1 ;
 
   public ChartContainerWithReferencePoints(String name) {
     this(name, 0);
@@ -46,8 +41,6 @@ public class ChartContainerWithReferencePoints {
     this.name = name;
     this.delay = delay;
     this.charts = new LinkedHashMap<String, XYChart>();
-    this.iterations = new HashMap<String, List<Integer>>();
-    this.indicatorValues = new HashMap<String, List<Double>>();
     this.referencePointName = new ArrayList<>() ;
   }
 
@@ -60,7 +53,7 @@ public class ChartContainerWithReferencePoints {
     this.objective2 = objective2;
     this.frontChart = new XYChartBuilder().xAxisTitle("Objective " + this.objective1)
         .yAxisTitle("Objective " + this.objective2).build();
-    this.frontChart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter).setMarkerSize(5);
+    this.frontChart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Scatter).setMarkerSize(5);
 
     if (referenceFrontFileName != null) {
       this.displayReferenceFront(referenceFrontFileName);
@@ -105,8 +98,9 @@ public class ChartContainerWithReferencePoints {
   }
 
   public void initChart() {
-    this.sw = new SwingWrapper<XYChart>(new ArrayList<XYChart>(this.charts.values()));
-    this.sw.displayChartMatrix(this.name);
+    this.swingWrapper = new SwingWrapper<XYChart>(new ArrayList<XYChart>(this.charts.values()));
+    //this.swingWrapper.displayChartMatrix(this.name);
+    this.swingWrapper.displayChartMatrix();
   }
 
   public void updateFrontCharts(List<DoubleSolution> solutionList) {
@@ -137,7 +131,7 @@ public class ChartContainerWithReferencePoints {
   public void repaint() {
     try {
       for (int i = 0; i < this.charts.values().size(); i++) {
-        this.sw.repaintChart(i);
+        this.swingWrapper.repaintChart(i);
       }
     } catch (IndexOutOfBoundsException e) {
       e.printStackTrace();
@@ -146,7 +140,7 @@ public class ChartContainerWithReferencePoints {
 
   private void displayFront(String name, String fileName, int objective1, int objective2)
       throws FileNotFoundException {
-    ArrayFront front = new ArrayFront(fileName);
+    ArrayFront front = new ArrayFront(fileName, ",");
     double[][] data = FrontUtils.convertFrontToArray(front);
     double[] xData = getObjectiveValues(data, objective1);
     double[] yData = getObjectiveValues(data, objective2);
@@ -174,14 +168,6 @@ public class ChartContainerWithReferencePoints {
     double[] result = new double[solutionList.size()];
     for (int i = 0; i < solutionList.size(); i++) {
       result[i] = solutionList.get(i).getObjective(objective);
-    }
-    return result;
-  }
-
-  private double[] getVariableValues(List<DoubleSolution> solutionList, int variable) {
-    double[] result = new double[solutionList.size()];
-    for (int i = 0; i < solutionList.size(); i++) {
-      result[i] = solutionList.get(i).getVariableValue(variable);
     }
     return result;
   }

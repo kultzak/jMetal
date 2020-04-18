@@ -1,13 +1,15 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
 
 /**
  * Class representing problem MaF06
  */
+@SuppressWarnings("serial")
 public class MaF06 extends AbstractDoubleProblem {
 
   /**
@@ -38,8 +40,7 @@ public class MaF06 extends AbstractDoubleProblem {
       upper.add(1.0);
     }
 
-    setLowerLimit(lower);
-    setUpperLimit(upper);
+    setVariableBounds(lower, upper);
   }
 
   /**
@@ -57,10 +58,9 @@ public class MaF06 extends AbstractDoubleProblem {
     double[] f = new double[numberOfObjectives_];
 
     for (int i = 0; i < numberOfVariables_; i++) {
-      x[i] = solution.getVariableValue(i);
+      x[i] = solution.getVariable(i);
     }
     double[] thet = new double[numberOfObjectives_ - 1];
-    int lb, ub, ri = 0;
     double g = 0, sub1, sub2;
     // evaluate g,thet
     for (int i = numberOfObjectives_ - 1; i < numberOfVariables_; i++) {
@@ -76,7 +76,7 @@ public class MaF06 extends AbstractDoubleProblem {
     }
     // evaluate fm,fm-1,...,2,f1
     f[numberOfObjectives_ - 1] = Math.sin(thet[0]) * sub1;
-    double subf1 = 1, subf2, subf3;
+    double subf1 = 1;
     // fi=cos(thet1)cos(thet2)...cos(thet[m-i])*sin(thet(m-i+1))*(1+g[i]),fi=subf1*subf2*subf3
     for (int i = numberOfObjectives_ - 2; i > 0; i--) {
       subf1 *= Math.cos(thet[numberOfObjectives_ - i - 2]);

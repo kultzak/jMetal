@@ -1,7 +1,7 @@
 package org.uma.jmetal.algorithm.multiobjective.paes;
 
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionStrategy;
-import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.impl.AdaptiveGridArchive;
@@ -62,7 +62,7 @@ public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
   }
 
   @Override protected void initProgress() {
-    evaluations = 0;
+    evaluations = 1;
   }
 
   @Override protected void updateProgress() {

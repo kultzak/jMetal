@@ -1,9 +1,10 @@
 package org.uma.jmetal.problem.multiobjective.UF;
 
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
 
 /**
  * Class representing problem CEC2009_UF2
@@ -27,7 +28,7 @@ public class UF2 extends AbstractDoubleProblem {
     setNumberOfVariables(numberOfVariables) ;
     setNumberOfObjectives(2) ;
     setNumberOfConstraints(0) ;
-    setName("UF") ;
+    setName("UF2") ;
 
     List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
     List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
@@ -39,8 +40,7 @@ public class UF2 extends AbstractDoubleProblem {
       upperLimit.add(1.0);
     }
 
-    setLowerLimit(lowerLimit);
-    setUpperLimit(upperLimit);
+    setVariableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
@@ -48,7 +48,7 @@ public class UF2 extends AbstractDoubleProblem {
   public void evaluate(DoubleSolution solution) {
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      x[i] = solution.getVariableValue(i) ;
+      x[i] = solution.getVariable(i) ;
     }
 
     int count1, count2;

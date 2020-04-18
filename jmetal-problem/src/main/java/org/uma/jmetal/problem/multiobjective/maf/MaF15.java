@@ -1,13 +1,15 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
 
 /**
  * Class representing problem MaF15
  */
+@SuppressWarnings("serial")
 public class MaF15 extends AbstractDoubleProblem {
   public static int nk15;
   public static int sublen15[], len15[];
@@ -66,8 +68,7 @@ public class MaF15 extends AbstractDoubleProblem {
         upper.add(10.0);
     } //for
 
-    setLowerLimit(lower);
-    setUpperLimit(upper);
+    setVariableBounds(lower, upper);
   }
 
   /**
@@ -85,7 +86,7 @@ public class MaF15 extends AbstractDoubleProblem {
     double[] f = new double[numberOfObjectives];
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getVariableValue(i);
+      x[i] = solution.getVariable(i);
     }
 
     // change x

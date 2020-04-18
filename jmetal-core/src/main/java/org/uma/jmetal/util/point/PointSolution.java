@@ -1,11 +1,8 @@
 package org.uma.jmetal.util.point;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.uma.jmetal.solution.Solution;
+
+import java.util.*;
 
 /**
  * Solution used to wrap a {@link Point} object. Only objectives are used.
@@ -88,16 +85,27 @@ public class PointSolution implements Solution<Double> {
     return Collections.emptyList() ;
   }
 
-  @Override public Double getVariableValue(int index) {
+  @Override public Double getVariable(int index) {
     return null;
   }
 
-  @Override public void setVariableValue(int index, Double value) {
+  @Override public void setVariable(int index, Double value) {
 	  //This method is an intentionally-blank override.
   }
 
-  @Override public String getVariableValueString(int index) {
-    return null;
+  @Override
+  public double[] getConstraints() {
+    return new double[0];
+  }
+
+  @Override
+  public double getConstraint(int index) {
+    return 0;
+  }
+
+  @Override
+  public void setConstraint(int index, double value) {
+
   }
 
   @Override public int getNumberOfVariables() {
@@ -106,6 +114,11 @@ public class PointSolution implements Solution<Double> {
 
   @Override public int getNumberOfObjectives() {
     return numberOfObjectives;
+  }
+
+  @Override
+  public int getNumberOfConstraints() {
+    return 0;
   }
 
   @Override public PointSolution copy() {
@@ -118,6 +131,11 @@ public class PointSolution implements Solution<Double> {
 
   @Override public Object getAttribute(Object id) {
     return attributes.get(id);
+  }
+
+  @Override
+  public boolean hasAttribute(Object id) {
+    return false;
   }
 
   @Override public boolean equals(Object o) {

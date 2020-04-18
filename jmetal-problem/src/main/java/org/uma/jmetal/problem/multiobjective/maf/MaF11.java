@@ -1,13 +1,15 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
 
 /**
  * Class representing problem MaF11
  */
+@SuppressWarnings("serial")
 public class MaF11 extends AbstractDoubleProblem {
 
   public static int K11, L11;
@@ -45,8 +47,7 @@ public class MaF11 extends AbstractDoubleProblem {
       upper.add(2.0 * (var + 1));
     }
 
-    setLowerLimit(lower);
-    setUpperLimit(upper);
+    setVariableBounds(lower, upper);
   }
 
   /**
@@ -63,7 +64,7 @@ public class MaF11 extends AbstractDoubleProblem {
     double[] f = new double[numberOfObjectives];
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getVariableValue(i);
+      x[i] = solution.getVariable(i);
     }
 
     // evaluate zi,t1i,t2i,t3i,t4i,yi

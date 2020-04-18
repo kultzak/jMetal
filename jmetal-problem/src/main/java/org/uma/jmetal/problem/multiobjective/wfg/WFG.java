@@ -1,11 +1,10 @@
 package org.uma.jmetal.problem.multiobjective.wfg;
 
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 
 /**
  * Implements a reference abstract class for all wfg org.uma.test problem
@@ -56,13 +55,7 @@ public abstract class WFG extends AbstractDoubleProblem {
       upperLimit.add(2.0*(i+1));
     }
 
-    setLowerLimit(lowerLimit);
-    setUpperLimit(upperLimit);
-  }
-
-  @Override
-  public DoubleSolution createSolution() {
-    return new DefaultDoubleSolution(this)  ;
+    setVariableBounds(lowerLimit, upperLimit);
   }
 
   /**

@@ -1,14 +1,17 @@
 package org.uma.jmetal.algorithm.multiobjective.spea2.util;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.StrengthFitnessComparator;
 import org.uma.jmetal.util.solutionattribute.impl.LocationAttribute;
 import org.uma.jmetal.util.solutionattribute.impl.StrengthRawFitness;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Juanjo Durillo
@@ -18,7 +21,6 @@ import java.util.*;
 public class EnvironmentalSelection<S extends Solution<?>> implements SelectionOperator<List<S>,List<S>> {
 
   private int solutionsToSelect ;
-  private int k ;
   private StrengthRawFitness<S> strengthRawFitness ;
 
   public EnvironmentalSelection(int solutionsToSelect) {
@@ -27,7 +29,6 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 
   public EnvironmentalSelection(int solutionsToSelect, int k) {
     this.solutionsToSelect = solutionsToSelect ;
-    this.k = k ;
     this.strengthRawFitness = new StrengthRawFitness<>(k) ;
   }
 

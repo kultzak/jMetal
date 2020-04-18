@@ -1,13 +1,15 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
 
 /**
  * Class representing problem MaF12
  */
+@SuppressWarnings("serial")
 public class MaF12 extends AbstractDoubleProblem {
 
   public static int K12, L12;
@@ -42,8 +44,7 @@ public class MaF12 extends AbstractDoubleProblem {
       upper.add(2.0 * (var + 1));
     }
 
-    setLowerLimit(lower);
-    setUpperLimit(upper);
+    setVariableBounds(lower, upper);
   }
 
   /**
@@ -61,7 +62,7 @@ public class MaF12 extends AbstractDoubleProblem {
     double[] f = new double[numberOfObjectives_];
 
     for (int i = 0; i < numberOfVariables_; i++) {
-      x[i] = solution.getVariableValue(i);
+      x[i] = solution.getVariable(i);
     }
 
     double subf1 = 1;
@@ -96,7 +97,7 @@ public class MaF12 extends AbstractDoubleProblem {
           122 * Math.PI * (0.5 - Math.abs(t1[i] - 0.35) * 0.5 / (Math.floor(0.35 - t1[i]) + 0.35)))
           + 380 * Math.pow(Math.abs(t1[i] - 0.35) * 0.5 / (Math.floor(0.35 - t1[i]) + 0.35), 2));
     }
-    int p = 0, q = 0, h = 0;
+    int p = 0, h = 0;
     double sub3 = 0, sub4 = 0;
     sub1 =
         Math.ceil(0.5 * K12 / (numberOfObjectives_ - 1)) * (1 + 2 * K12 / (numberOfObjectives_ - 1)
